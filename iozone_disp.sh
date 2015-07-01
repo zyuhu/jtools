@@ -36,6 +36,7 @@ do
 	
 done
 
+#build data_group
 new_dir=`pwd`
 new_dir_file_list=`ls`
 mkdir -pv ${new_dir}/data_group
