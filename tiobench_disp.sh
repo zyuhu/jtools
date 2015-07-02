@@ -1,10 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 
 #ROOT_DIR=$(pwd)
 #NEW_LOGS_DIR=${ROOT_DIR}/logs_bz2
 #HANDLER_DIR=${ROOT_DIR}/handler_directory
 
-set -x 
 
 working_dir=${HANDLER_DIR}/$1
 
@@ -31,7 +30,8 @@ do
 	rm -rf t
 	#remove noused files dependence on testsutie
 	pushd ${log_dir}
-	rm -rf `ls | grep -v "^qa_siege_performance$"`
+	rm -rf `ls | grep -v "^tiobench-"`
+	rm -rf iozone-bigmem-abuildinfo
 	popd
 	
 done
@@ -50,15 +50,12 @@ do
 	mkdir -pv ${new_dir}/data_group/${y}
 	touch ${new_dir}/data_group/${y}/${y}.${x}
 	j=1
-	#因为我们需要合并新测试数据（求平均，求和）
-	#所以我们需要把数据转化成一行一行的
-	for i in $(cat ${y} | egrep "^Transaction rate:|^Throughput:" | awk -F ':' '{print $2}'|awk '{print $1}');do echo $i >> ${new_dir}/data_group/${y}/${y}.${x}; echo $i >> ${new_dir}/data_group/${y}/line${j};((j++));done
+	for i in $(cat ${y} | grep "^[2-4]\.[0-9]*\.[0-9]*-[0-9.]*-[a-z]*" | awk '{print $5}');do echo $i >> ${new_dir}/data_group/${y}/${y}.${x}; echo $i >> ${new_dir}/data_group/${y}/line${j};((j++));done
 	done
 	popd
 done
 
 
-#ask a number of samples 's average value.
 mkdir -pv ${new_dir}/result
 pushd ${new_dir}/data_group
 	for dir in `ls`
@@ -66,7 +63,7 @@ pushd ${new_dir}/data_group
 	pushd $dir
 	for i in `seq 1 $(($j - 1))`
 	do
-		echo `cat line$i | awk '{a+=$1}END{printf("%.2f\n",a/NR)}'` >> ${new_dir}/result/$dir
+		echo `cat line$i | awk '{a+=$1}END{printf("%.1f\n",a/NR)}'` >> ${new_dir}/result/$dir
 	done
 	popd
 	done
