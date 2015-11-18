@@ -79,11 +79,11 @@ On_IWhite='\e[0;107m'   # White
 
 bonnie++-filter ()
 {
-    awk 'BEGIN{failed=0}/^\[.Seq.*mean/{if ($6 < -10) printf "%s **\n",$0;failed=1}/Random.*Seeks.*mean/{if ($5 < -10)printf "%s**\n" $0;failed=1}/ Random.*Create.*mean/{if ($13 < -10) printf"%s**\n" $0;failed=1}END{if (failed==1) {exit 1}}'
+    awk 'BEGIN{failed=0}/mean/{if ($6 < -10) printf"%s**\n" $0;failed=1}END{if (failed==1) {exit 1}}'
 }
 tiobench-filter ()
 {
-    awk 'BEGIN{failed=0}/mean/{if ($8 < -10) printf "%s **\n",$0;failed=1}END{if (failed==1) {exit 1}}'
+    awk 'BEGIN{failed=0;sum_ratio=0;n=0;}/mean/{sum_ratio=sum_ratio+$8;array[n]=$8;n++;if ($8 < -10) printf "%s **\n",$0;failed=1;}END{for(x=1;x<=n;x++){sumsq+=((array[x]-(sum/n))**2);}printf "**Stddev:%f**\n",sqrt(sumsq/n);printf "**Amean:%f**\n",sum_ratio/n; printf "**C.V:%f**\n",100*(sqrt(sumsq/n)/(sum_ratio/n));if (failed==1) {exit 1}}'
 }
 sysbench_sys-filter ()
 {
@@ -163,53 +163,53 @@ do
 
                 case $d in
                     qa_siege*)
-                        text=`cat $f | sort | siege-filter`
+                        text=`cat $f | siege-filter`
                         ;;
                     bonnie++*)
-                        text=`cat $f | sort | bonnie++-filter`
+                        text=`cat $f | bonnie++-filter`
                         ;;
                     dbench4*)
-                        text=`cat $f | sort | dbench4-filter`
+                        text=`cat $f | dbench4-filter`
                         ;;
                     kernbench)
-                        text=`cat $f | sort | kernbench-filter`
+                        text=`cat $f | kernbench-filter`
                         ;;
                     lmbench)
-                        text=`cat $f | sort | lmbench-filter`
+                        text=`cat $f | lmbench-filter`
                         ;;
                     netperf-peer*)
-                        text=`cat $f | sort | netperf-filter`
+                        text=`cat $f | netperf-filter`
                         ;;
                     pgbench_small_rw*)
-                        text=`cat $f | sort | pgbench-rw-filter`
+                        text=`cat $f | pgbench-rw-filter`
                         ;;
                     pgbench_small_ro*)
-                        text=`cat $f | sort | pgbench-filter`
+                        text=`cat $f | pgbench-filter`
                         ;;
                     qa_iozone*)
-                        text=`cat $f | sort | iozone-filter`
+                        text=`cat $f | iozone-filter`
                         ;;
                     qa_tiobench*)
-                        text=`cat $f | sort | tiobench-filter`
+                        text=`cat $f | tiobench-filter`
                         ;;
                     reaim*)
-                        text=`cat $f | sort | reaim-filter`
+                        text=`cat $f | reaim-filter`
                         ;;
                     sysbench_oltp*)
-                        text=`cat $f | sort | sysbench_oltp-filter`
+                        text=`cat $f | sysbench_oltp-filter`
                         ;;
                     sysbench*)
-                        text=`cat $f | sort | sysbench_sys-filter`
+                        text=`cat $f | sysbench_sys-filter`
                         ;;
                 esac
                 if [ -n "${text}" ]; then
                     _FAILED=1
                     #echo -e "The machine $m is ${Red}FAILED${Color_Off}"
                     echo -e "${text}"
-                    echo "$m-$f"
+                    echo $m
                 else
                     :
-                    echo "$m-$f"
+                    echo $m
                     #echo -e "The machine $m is ${White}PASSED${Color_Off}"
                 fi
             done
@@ -222,8 +222,10 @@ do
         echo -e "The test case $d is ${Red}FAILED${Color_Off}"
     else
         echo -e "The test case $d is ${White}PASSED${Color_Off}"
-        :
     fi
 
     echo "========================================================="
 done
+
+
+
