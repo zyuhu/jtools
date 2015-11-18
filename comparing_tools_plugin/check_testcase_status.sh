@@ -211,6 +211,8 @@ do
                     echo "$m-$f"
                     if [ "x${arch}" == "xxen0" ];then
                         echo ${webroot}/${product}/xen0/${d}/${m}/${f}
+                    else
+                        echo ${webroot}/${product}/x86_64/${d}/${m}/${f}
                     fi
                 else
                     :
