@@ -1,5 +1,7 @@
 #!/bin/bash
 
+webroot="http://147.2.207.100/Performance_Comparing_Result"
+product="SLE12SP1_GMC"
 
 
 # Reset
@@ -147,9 +149,9 @@ do
     pushd $d 2>&1 >/dev/null
     for arch in `ls` 
     do
-        if [ "${arch}x" == "x86_64x" ]; then
-            continue;
-        fi
+#        if [ "${arch}x" == "x86_64x" ]; then
+#            continue;
+#        fi
         echo "Arch on $arch"
         #enter a arch
         pushd $arch 2>&1 >/dev/null
@@ -207,6 +209,11 @@ do
                     #echo -e "The machine $m is ${Red}FAILED${Color_Off}"
                     echo -e "${text}"
                     echo "$m-$f"
+                    if [ "x${arch}" == "xxen0" ];then
+                        echo ${webroot}/${product}/xen0/${d}/${m}/${f}
+                    else
+                        echo ${webroot}/${product}/x86_64/${d}/${m}/${f}
+                    fi
                 else
                     :
                     echo "$m-$f"
