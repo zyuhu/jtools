@@ -4,9 +4,9 @@ echo "------------------------------------------------------"
 echo "Beijing Servers:"
 echo "------------------------------------------------------"
 #210 
-for number in 163 210 209 114 211
+for number in 163 210 209 114 211 130
 do
-    echo 147.2.207.$number:
+    echo "147.2.207.$number:" &
     sshpass -p susetesting ssh root@147.2.207.${number} screen -ls 
     retval=$?
     case ${retval} in
@@ -26,7 +26,7 @@ echo "------------------------------------------------------"
 
 for number in 54 53
 do
-    echo 10.162.2.$number:
+    echo "10.162.2.$number:" &
     sshpass -p susetesting ssh root@10.162.2.${number} screen -ls 
     retval=$?
     case ${retval} in
