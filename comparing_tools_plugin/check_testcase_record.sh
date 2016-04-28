@@ -1,7 +1,7 @@
 #!/bin/bash
 
 webroot="http://147.2.207.100/Performance_Comparing_Result"
-product="SLE12SP1_GM_MU"
+product="SLE12SP1_GMC"
 
 
 # Reset
@@ -81,65 +81,65 @@ On_IWhite='\e[0;107m'   # White
 
 bonnie++-filter ()
 {
-    awk 'BEGIN{failed=0}/^\[.Seq.*mean/{if ($6 < -10) printf "%s **\n",$0;failed=1}/Random.*Seeks.*mean/{if ($5 < -10)printf "%s**\n" $0;failed=1}/ Random.*Create.*mean/{if ($13 < -10) printf"%s**\n" $0;failed=1};/std/{if (failed==1){print $0;failed=0;}}'
+    awk 'BEGIN{failed=0}/^\[.Seq.*cv/{if ($6 < -10) printf "%s **\n",$0;failed=1}/Random.*Seeks.*cv/{if ($5 < -10)printf "%s**\n" $0;failed=1}/ Random.*Create.*cv/{if ($13 < -10) printf"%s**\n" $0;failed=1};/std/{if (failed==1){print $0;failed=0;}}'
 }
 tiobench-filter ()
 {
-    awk 'BEGIN{failed=0}/mean/{if ($8 < -10) {printf "%s **\n",$0;failed=1}};/std/{if (failed==1){print $0;failed=0;}}'
+    awk 'BEGIN{failed=0}/cv/{if ($8 < -10) {printf "%s **\n",$0;failed=1}};/std/{if (failed==1){print $0;failed=0;}}'
 }
 sysbench_sys-filter ()
 {
-    awk 'BEGIN{failed=0}/mean/{if ($6 > 10) {printf "%s **\n",$0;failed=1}};/std/{if (failed==1){print $0;failed=0;}}'
+    awk 'BEGIN{failed=0}/cv/{if ($6 > 10) {printf "%s **\n",$0;failed=1}};/std/{if (failed==1){print $0;failed=0;}}'
 }
 sysbench_oltp-filter ()
 {
-    awk 'BEGIN{failed=0}/mean/{if ($6 > 10) {printf "%s **\n",$0;failed=1}};/std/{if (failed==1){print $0;failed=0;}}'
+    awk 'BEGIN{failed=0}/cv/{if ($6 > 10) {printf "%s **\n",$0;failed=1}};/std/{if (failed==1){print $0;failed=0;}}'
 }
 siege-filter ()
 {
-    awk 'BEGIN{failed=0}/mean/{if ($4 < -10) {printf "%s **\n",$0;failed=1}};/std/{if (failed==1){print $0;failed=0;}}'
+    awk 'BEGIN{failed=0}/cv/{if ($4 < -10) {printf "%s **\n",$0;failed=1}};/std/{if (failed==1){print $0;failed=0;}}'
 }
 reaim-filter ()
 {
-    awk 'BEGIN{failed=0}/mean/{if ($4 < -10) {printf "%s **\n",$0;failed=1}};/std/{if (failed==1){print $0;failed=0;}}'
+    awk 'BEGIN{failed=0}/cv/{if ($4 < -10) {printf "%s **\n",$0;failed=1}};/std/{if (failed==1){print $0;failed=0;}}'
 }
 pgbench-rw-filter ()
 {
-    awk 'BEGIN{failed=0}/mean/{if ($6 < -10) {printf "%s **\n",$0;failed=1}};/std/{if (failed==1){print $0;failed=0;}}'
+    awk 'BEGIN{failed=0}/cv/{if ($6 < -10) {printf "%s **\n",$0;failed=1}};/std/{if (failed==1){print $0;failed=0;}}'
 }
 
 pgbench-filter ()
 {
-    awk 'BEGIN{failed=0}/mean/{if ($5 < -10) {printf "%s **\n",$0;failed=1}};/std/{if (failed==1){print $0;failed=0;}}'
+    awk 'BEGIN{failed=0}/cv/{if ($5 < -10) {printf "%s **\n",$0;failed=1}};/std/{if (failed==1){print $0;failed=0;}}'
 }
 
 netperf-filter ()
 {
-    awk 'BEGIN{failed=0}/mean/{if ($5 < -10) {printf "%s **\n",$0;failed=1}};/std/{if (failed==1){print $0;failed=0;}}'
+    awk 'BEGIN{failed=0}/cv/{if ($5 < -10) {printf "%s **\n",$0;failed=1}};/std/{if (failed==1){print $0;failed=0;}}'
 }
 
 lmbench-filter ()
 {
-    awk 'BEGIN{failed=0}/mean/{if ($4 > 10) {printf "%s **\n",$0;failed=1}};/std/{if (failed==1){print $0;failed=0;}}'
+    awk 'BEGIN{failed=0}/cv/{if ($4 > 10) {printf "%s **\n",$0;failed=1}};/std/{if (failed==1){print $0;failed=0;}}'
 }
 
 kernbench-filter ()
 {
-    awk 'BEGIN{failed=0}/mean/{if ($5 < -10) {printf "%s **\n",$0;failed=1}};/std/{if (failed==1){print $0;failed=0;}}'
+    awk 'BEGIN{failed=0}/cv/{if ($5 < -10) {printf "%s **\n",$0;failed=1}};/std/{if (failed==1){print $0;failed=0;}}'
 }
 
 iozone-filter ()
 {
-    awk 'BEGIN{failed=0}/mean/{if ($6 < -10) {printf "%s **\n",$0;failed=1}};/std/{if (failed==1){print $0;failed=0;}}'
+    awk 'BEGIN{failed=0}/cv/{if ($6 < -10) {printf "%s **\n",$0;failed=1}};/std/{if (failed==1){print $0;failed=0;}}'
 }
 
 dbench4-filter ()
 {
-    awk 'BEGIN{failed=0}/mean/{if ($4 < -10) {printf "%s **\n",$0;failed=1}};/std/{if (failed==1){print $0;failed=0;}}'
+    awk 'BEGIN{failed=0}/cv/{if ($4 < -10) {printf "%s **\n",$0;failed=1}};/std/{if (failed==1){print $0;failed=0;}}'
 }
 bonnie++-filter ()
 {
-    awk 'BEGIN{failed=0}/mean/{if ($5 < -10) {printf "%s **\n",$0;failed=1}};/std/{if (failed==1){print $0;failed=0;}}'
+    awk 'BEGIN{failed=0}/cv/{if ($5 < -10) {printf "%s **\n",$0;failed=1}};/std/{if (failed==1){print $0;failed=0;}}'
 }
 for d in `ls`
 do
@@ -207,7 +207,6 @@ do
                 if [ -n "${text}" ]; then
                     _FAILED=1
                     #echo -e "The machine $m is ${Red}FAILED${Color_Off}"
-                    echo "Warning:"
                     echo -e "${text}"
                     echo "$m-$f"
                     if [ "x${arch}" == "xxen0" ];then
