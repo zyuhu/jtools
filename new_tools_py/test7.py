@@ -2,6 +2,66 @@
 
 import re
 
+
+
+vaild_testcast_list = list(["qa_siege_performance",
+                "sysbench-sys",
+                "libmicro-bench",
+                "lmbench",
+                "kernbench",
+                "reaim-alltest",
+                "netperf-peer-loop",
+                "netperf-peer-loop6",
+                "reaim_disk_ext3",
+                "reaim_disk_xfs",
+                "reaim_disk_btrfs",
+                "reaim_disk_ext4",
+                "qa_iozone_doublemem_ext3",
+                "qa_iozone_doublemem_xfs",
+                "qa_iozone_doublemem_btrfs",
+                "qa_iozone_doublemem_ext4",
+                "qa_tiobench_async_ext3",
+                "qa_tiobench_async_xfs",
+                "qa_tiobench_async_btrfs",
+                "qa_tiobench_async_ext4",
+                "bonnie\+\+_async_ext3",
+                "bonnie\+\+_async_xfs",
+                "bonnie\+\+_async_btrfs",
+                "bonnie\+\+_async_ext4",
+                "bonnie\+\+_fsync_ext3",
+                "bonnie\+\+_fsync_xfs",
+                "bonnie\+\+_fsync_btrfs",
+                "bonnie\+\+_fsync_ext4",
+                "sysbench_oltp_ext3",
+                "sysbench_oltp_xfs",
+                "sysbench_oltp_btrfs",
+                "sysbench_oltp_ext4",
+                "dbench4_async_ext3",
+                "dbench4_async_xfs",
+                "dbench4_async_btrfs",
+                "dbench4_async_ext4",
+                "pgbench_small_rw_ext3",
+                "pgbench_small_rw_xfs",
+                "pgbench_small_rw_btrfs",
+                "pgbench_small_rw_ext4",
+                "pgbench_small_ro_ext3",
+                "pgbench_small_ro_xfs",
+                "pgbench_small_ro_btrfs",
+                "pgbench_small_ro_ext4",
+                "dbench4_fsync_ext3",
+                "dbench4_fsync_xfs",
+                "dbench4_fsync_btrfs",
+                "dbench4_fsync_ext4"])
+
+def tell_me_what_testcase_is_it(name):
+    checklist = vaild_testcast_list
+    for item in checklist:
+        r = re.compile("^"+item)
+        if r.match(name):
+            return item
+    raise NameError('Name Wrong')
+
+
 class TestItem():
     """testitem is a testing item in a subtestcase
         For example:
@@ -59,54 +119,7 @@ class TestCase():
         return self.name
 
     def check_testcase_name(self, name):
-        checklist = list(["qa_siege_performance",
-                "sysbench-sys",
-                "libmicro-bench",
-                "lmbench",
-                "kernbench",
-                "reaim-alltest",
-                "netperf-peer-loop",
-                "netperf-peer-loop6",
-                "reaim_disk_ext3",
-                "reaim_disk_xfs",
-                "reaim_disk_btrfs",
-                "reaim_disk_ext4",
-                "qa_iozone_doublemem_ext3",
-                "qa_iozone_doublemem_xfs",
-                "qa_iozone_doublemem_btrfs",
-                "qa_iozone_doublemem_ext4",
-                "qa_tiobench_async_ext3",
-                "qa_tiobench_async_xfs",
-                "qa_tiobench_async_btrfs",
-                "qa_tiobench_async_ext4",
-                "bonnie\+\+_async_ext3",
-                "bonnie\+\+_async_xfs",
-                "bonnie\+\+_async_btrfs",
-                "bonnie\+\+_async_ext4",
-                "bonnie\+\+_fsync_ext3",
-                "bonnie\+\+_fsync_xfs",
-                "bonnie\+\+_fsync_btrfs",
-                "bonnie\+\+_fsync_ext4",
-                "sysbench_oltp_ext3",
-                "sysbench_oltp_xfs",
-                "sysbench_oltp_btrfs",
-                "sysbench_oltp_ext4",
-                "dbench4_async_ext3",
-                "dbench4_async_xfs",
-                "dbench4_async_btrfs",
-                "dbench4_async_ext4",
-                "pgbench_small_rw_ext3",
-                "pgbench_small_rw_xfs",
-                "pgbench_small_rw_btrfs",
-                "pgbench_small_rw_ext4",
-                "pgbench_small_ro_ext3",
-                "pgbench_small_ro_xfs",
-                "pgbench_small_ro_btrfs",
-                "pgbench_small_ro_ext4",
-                "dbench4_fsync_ext3",
-                "dbench4_fsync_xfs",
-                "dbench4_fsync_btrfs",
-                "dbench4_fsync_ext4"])
+        checklist = vaild_testcast_list
         for item in checklist:
             r = re.compile(item)
             if r.match(name):

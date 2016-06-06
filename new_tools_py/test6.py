@@ -18,6 +18,7 @@ release_set = set()
 arch_set = set()
 machine_set = set()
 testcase_set = set()
+kernel_set = set()
 
 testcase_list = set()
 
@@ -44,14 +45,16 @@ def testcase_search(html_url, testcase_dict, r, a, p, m):
             testcase.product = p
             testcase.machine = m
             testcase.url = html_url
+#todo
+            testcase.kernel = ""
+            testcase_list.add(testcase)
         else:
             del testcase
-        testcase_list.add(testcase)
         #print(html_url+text)
 
 
 def machine_search(html_url, arch_dict):
-    print(html_url)
+#    print(html_url)
     http = urllib.request.urlopen(html_url)
     soup = BeautifulSoup(http, "lxml")
     for link in soup.findAll('a'):
@@ -74,7 +77,7 @@ def machine_search(html_url, arch_dict):
 
 
 def arch_search(html_url, release_dict):
-    print(html_url)
+#    print(html_url)
     http = urllib.request.urlopen(html_url)
     soup = BeautifulSoup(http, "lxml")
     for link in soup.findAll('a'):
@@ -131,8 +134,36 @@ print(arch_set)
 print(sorted(release_set))
 print(product_set)
 print(machine_set)
-print(testcase_set)
+#print(testcase_set)
 
-print(testcase_list)
+#while 1:
+#    p = input("[product]:")
+#    while p not in product_set:
+#        print("select one of product_set")
+#        p = input("[product]:")
+#
+#
+#    r = input("[release]:")
+#    while r not in release_set:
+#        print("select one of release_set")
+#        r = input("[release]:")
+#
+#
+#    a = input("[arch]:")
+#    while a not in arch_set:
+#        print("select one of arch_set")
+#        a = input("[arch]:")
+#
+#
+#    m = input("[machine]:")
+#    while m not in machine_set:
+#        print("select one of machine_set")
+#        m = input("[machine]:")
+#
+#
+#    for tc in testcase_list:
+#        if (tc.machine == m) and (tc.release == r) and (tc.product == p) and (tc.arch == a):
+#            print(tell_me_what_testcase_is_it(tc.name))
+#            #print(tc.name,tc.url)
 
 #print(DataBase)

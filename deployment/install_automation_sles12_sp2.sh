@@ -12,4 +12,11 @@ zypper -n rm snapper-zypp-plugin
 sed -i 's/USE_SNAPPER="yes"/#USE_SNAPPER="yes"/g' /etc/sysconfig/yast2
 sed -i '/USE_SNAPPER="yes"/a USE_SNAPPER="no"' /etc/sysconfig/yast2
 
-zypper -n rm qa_hamsta
+zypper install ca-certificates-suse
+
+zypper rm qa_hamsta
+
+
+t=`hostname`
+echo "${t}" > /etc/hostname
+hostname -F /etc/hostname

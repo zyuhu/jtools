@@ -4,7 +4,7 @@ echo "------------------------------------------------------"
 echo "Beijing Servers:"
 echo "------------------------------------------------------"
 #210 
-for number in 163 210 209 114 211 130
+for number in 226 210 209 227 211 
 do
     echo "147.2.207.$number:" &
     sshpass -p susetesting ssh root@147.2.207.${number} screen -ls 
@@ -16,6 +16,21 @@ do
             ;;
         6)
             ssh root@147.2.207.${number} screen -ls
+            ;;
+    esac
+done
+for number in 166 110 111 159
+do
+    echo "147.2.208.$number:" &
+    sshpass -p susetesting ssh root@147.2.208.${number} screen -ls 
+    retval=$?
+    case ${retval} in
+        255)
+            ssh-keygen -R 147.2.208.${number} -f /home/jnwang/.ssh/known_hosts
+            ssh root@147.2.208.${number} screen -ls
+            ;;
+        6)
+            ssh root@147.2.208.${number} screen -ls
             ;;
     esac
 done

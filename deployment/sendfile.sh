@@ -1,9 +1,15 @@
 #!/bin/bash
 
-for number in 210 211 209 163 114
+for number in 210 211 209 226 227
 do
     echo 147.2.207.$number:
     sshpass -p "susetesting" scp -r $@ root@147.2.207.${number}:
+done
+
+for number in 110 111 166
+do
+    echo 147.2.208.$number:
+    sshpass -p "susetesting" scp -r $@ root@147.2.208.${number}:
 done
 
 for number in 53 54
