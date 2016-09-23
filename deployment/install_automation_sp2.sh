@@ -18,7 +18,7 @@ hostname > /etc/hostname
 
 ntp_add_cmd="yast2 ntp-client add"
 ntp_enable_cmd="yast2 ntp-client enable"
-ntp_servers=("ntp1.suse.de", "ntp2.suse.de", "ntp3.suse.de")
+ntp_servers=("ntp1.suse.de" "ntp2.suse.de" "ntp3.suse.de")
 
 for srv in ${ntp_servers[@]};do
   eval ${ntp_add_cmd} server=${srv}
